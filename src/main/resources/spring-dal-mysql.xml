@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd"
+       default-lazy-init="true">
+
+    <!--destroy-method="close"：当数据库连接不使用的时候,就把该连接重新放到数据池中,方便下次使用调用.该连接池是tomcat的-->
+    <bean id="mysqlDataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <!--还有一些其他属性需要设置。比如最大连接数，连接时间等等 。。。-->
+    </bean>
+
+    <!--配置mybatis和spring整合，并自动扫描-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="mysqlDataSource"/>
+        <!--typeAliases 是一个类的数组类型，该配置表示扫描这该包下面的-->
+        <property name="typeAliasesPackage" value="FirstDemo.dao.domain"/>
+    </bean>
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="FirstDemo.dao.mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+
+    <!--配置事务-->
+    <bean id="mysqlDataSourceTransManage" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="mysqlDataSource"/>
+    </bean>
+</beans>

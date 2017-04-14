@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="FirstDemo.dao.mapper.UserMapper">
+    <!--1 可以配置映射关系-->
+    <!--2 具体的mybatis的sql了，注意这个地方的sql标签的id就是对应的mapper.java文件接口中对应的方法名城-->
+</mapper>
